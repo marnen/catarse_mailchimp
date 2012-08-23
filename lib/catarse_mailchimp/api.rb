@@ -1,19 +1,19 @@
 module CatarseMailchimp
-  module Sync
+  module API
     extend self
 
-    def subscribe(user, list_id = ::Configuration[:mailchimp_list_id])
+    def subscribe(user, list_id = MAILCHIMP_LIST_ID)
       subscribe_params = {
-        id: list_id,
+        id: list_id.to_s,
         batch: [ { :EMAIL => user.email } ]
       }
 
       mailchimp_api.list_batch_subscribe(subscribe_params)
     end
 
-    def unsubscribe(user, list_id = ::Configuration[:mailchimp_list_id])
+    def unsubscribe(user, list_id = MAILCHIMP_LIST_ID)
       unsubscribe_params = {
-        id: list_id,
+        id: list_id.to_s,
         emails: [ user.email ],
         delete_member: true,
         send_goodbye: true
@@ -25,7 +25,7 @@ module CatarseMailchimp
     protected
 
     def mailchimp_api
-      Mailchimp::API.new(::Configuration[:mailchimp_api_key])
+      Mailchimp::API.new(MAILCHIMP_API_KEY)
     end
   end
 end

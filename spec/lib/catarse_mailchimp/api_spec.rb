@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Subscribe and Unsubscribe user email on mailchimp' do
+describe CatarseMailchimp::API do
   before do
     fake_mailchimp = mock();
     fake_mailchimp.stubs(:list_batch_subscribe).returns('list_batch_subscribe')
@@ -9,18 +9,22 @@ describe 'Subscribe and Unsubscribe user email on mailchimp' do
     Mailchimp::API.stubs(:new).returns(fake_mailchimp)
   end
 
-  subject { Factory(:user) }
+  subject do
+    user = mock()
+    user.stubs(:email).returns('lorem@lorem.com')
+    user
+  end
 
   context 'Subscribe' do
     it 'when user want to receive a newsletter, should update on mailchimp list' do
-      instance = CatarseMailchimp::Sync.subscribe(subject, 'LISTID')
+      instance = CatarseMailchimp::API.subscribe(subject, 'LISTID')
       instance.should == 'list_batch_subscribe'
     end
   end
 
   context 'Unsubscribe' do
     it 'when user want to not receive a newsletter, should update on mailchimp list' do
-      instance = CatarseMailchimp::Sync.unsubscribe(subject, 'LISTID')
+      instance = CatarseMailchimp::API.unsubscribe(subject, 'LISTID')
       instance.should == 'list_batch_unsubscribe'
     end
   end

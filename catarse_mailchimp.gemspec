@@ -16,8 +16,9 @@ Gem::Specification.new do |s|
 
   s.files = `git ls-files`.split($\)
 
-  s.add_dependency "rails", "~> 3.2.6"
   s.add_dependency "mailchimp"
 
-  s.add_development_dependency "rspec-rails"
+  s.add_development_dependency "rspec"
+  s.add_development_dependency "mocha"
+  s.add_runtime_dependency "supermodel"
 end
