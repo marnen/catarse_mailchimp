@@ -1,4 +1,4 @@
-= CatarseMailchimp
+# CatarseMailchimp
 
 Catarse mailchimp integration with [Catarse](http://github.com/danielweinmann/catarse) crowdfunding platform
 
@@ -39,6 +39,14 @@ Create a mailchimp configuration file on config/initilazers/mailchimp.rb and add
 
     MAILCHIMP_API_KEY = Configuration[:mailchimp_api_key]
     MAILCHIMP_LIST_ID = Configuration[:mailchimp_list_id]
+
+## Contributing
+
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
 
 
 This project rocks and uses MIT-LICENSE.
