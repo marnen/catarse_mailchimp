@@ -8,11 +8,13 @@ module CatarseMailchimp
     #   end
     def sync_with_mailchimp
       self.class_eval <<-RUBY
-        after_save do
-          if newsletter
-            CatarseMailchimp::API.subscribe(self)
-          else
-            CatarseMailchimp::API.unsubscribe(self)
+        before_save do
+          if newsletter_changed?
+            if newsletter
+              CatarseMailchimp::API.subscribe(self)
+            else
+              CatarseMailchimp::API.unsubscribe(self)
+            end
           end
         end
       RUBY
