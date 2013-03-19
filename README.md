@@ -19,11 +19,11 @@ Add on user model app/models/user.br
     class User < ActiveRecord::Base
       ...
 
-      sync_with_mailchimp subscribe_data: { EMAIL: :email, NAME: :name },      
-                          list_id: Configuration[:mailchimp_list_id],
+      sync_with_mailchimp subscribe_data: ->(user) { { EMAIL: user.email, NAME: user.name } },
+                          list_id: 'listID',
                           subscribe_when: ->(user) { user.newsletter_changed? && user.newsletter },
                           unsubscribe_when: ->(user) { user.newsletter_changed? && !user.newsletter },
-                          ubsubscribe_email: ->(user) { user.email }      
+                          ubsubscribe_email: ->(user) { user.email }
 
       ...
     end
