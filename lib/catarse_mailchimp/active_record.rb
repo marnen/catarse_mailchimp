@@ -3,7 +3,7 @@ module CatarseMailchimp
     # USAGE
     #
     #   class User < ActiveRecord::Base
-    #     sync_with_mailchimp subscribe_data: { EMAIL: :email, NAME: :name },      
+    #     sync_with_mailchimp subscribe_data: ->(user) { { EMAIL: user.email, NAME: user.name } },
     #                         list_id: 'listID',
     #                         subscribe_when: ->(user) { user.newsletter_changed? && user.newsletter },
     #                         unsubscribe_when: ->(user) { user.newsletter_changed? && !user.newsletter },
@@ -16,7 +16,7 @@ module CatarseMailchimp
         before_save do
                               
           if options[:subscribe_when].call(self)
-            CatarseMailchimp::API.subscribe(options[:subscribe_data], options[:list_id], self)
+            CatarseMailchimp::API.subscribe(options[:subscribe_data].call(self), options[:list_id])
           end
           
           if options[:unsubscribe_when].call(self)

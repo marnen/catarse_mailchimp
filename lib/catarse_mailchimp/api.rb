@@ -2,10 +2,10 @@ module CatarseMailchimp
   module API
     extend self
 
-    def subscribe(hash, list_id, resource)
+    def subscribe(hash, list_id)
       subscribe_params = {
         id: list_id.to_s,
-        batch: [ convert_to_resource_params(hash, resource) ]
+        batch: [ hash ]
       }
 
       mailchimp_api.list_batch_subscribe(subscribe_params)
@@ -22,15 +22,6 @@ module CatarseMailchimp
       mailchimp_api.list_batch_unsubscribe(unsubscribe_params)
     end
     
-    
-    def convert_to_resource_params(hash, resource)
-      new_hash = {}
-      hash.to_a.collect do |map|
-        new_hash[map[0]] = resource.send(map[1])
-      end
-      new_hash
-    end
-
     protected
 
     def mailchimp_api

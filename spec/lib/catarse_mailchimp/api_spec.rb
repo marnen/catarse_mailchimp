@@ -17,20 +17,13 @@ describe CatarseMailchimp::API do
   }
 
   subject do    
-    { EMAIL: :email, NAME: :name }
+    { EMAIL: user.email, NAME: user.name }
   end
 
   context '.subscribe' do
     it 'when user want to receive a newsletter, should update on mailchimp list' do
-      instance = CatarseMailchimp::API.subscribe(subject, 'LISTID', user)
+      instance = CatarseMailchimp::API.subscribe(subject, 'LISTID')
       instance.should == 'list_batch_subscribe'
-    end
-  end
-  
-  context '.convert_to_resource_params' do
-    it do
-      instance = CatarseMailchimp::API.convert_to_resource_params(subject, user)
-      instance.should == { EMAIL: user.email, NAME: user.name }
     end
   end
 
