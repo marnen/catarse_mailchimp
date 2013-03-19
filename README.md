@@ -6,7 +6,7 @@ Catarse mailchimp integration with [Catarse](http://github.com/danielweinmann/ca
 
 Add this lines to your Catarse application's Gemfile:
 
-    gem 'catarse_mailchimp'
+    gem 'catarse_mailchimp', git: 'git://github.com/catarse/catarse_mailchimp.git', branch: 'master'
 
 And then execute:
 
@@ -19,7 +19,11 @@ Add on user model app/models/user.br
     class User < ActiveRecord::Base
       ...
 
-      sync_with_mailchimp
+      sync_with_mailchimp subscribe_data: { EMAIL: :email, NAME: :name },      
+                          list_id: Configuration[:mailchimp_list_id],
+                          subscribe_when: ->(user) { user.newsletter_changed? && user.newsletter },
+                          unsubscribe_when: ->(user) { user.newsletter_changed? && !user.newsletter },
+                          ubsubscribe_email: ->(user) { user.email }      
 
       ...
     end
@@ -38,7 +42,6 @@ In Rails console, run this:
 Create a mailchimp configuration file on config/initilazers/mailchimp.rb and add:
 
     MAILCHIMP_API_KEY = Configuration[:mailchimp_api_key]
-    MAILCHIMP_LIST_ID = Configuration[:mailchimp_list_id]
 
 ## Contributing
 
