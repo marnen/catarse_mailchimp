@@ -8,21 +8,41 @@ describe CatarseMailchimp::API do
 
     Mailchimp::API.stubs(:new).returns(fake_mailchimp)
   end
-
-  subject do
+  
+  let(:user) {
     user = mock()
     user.stubs(:email).returns('lorem@lorem.com')
+    user.stubs(:name).returns('Foo bar')
     user
+  }
+
+  subject do    
+    { EMAIL: :email, NAME: :name }
   end
 
-  context 'Subscribe' do
+  context '.subscribe' do
     it 'when user want to receive a newsletter, should update on mailchimp list' do
-      instance = CatarseMailchimp::API.subscribe(subject, 'LISTID')
+      instance = CatarseMailchimp::API.subscribe(subject, 'LISTID', user)
       instance.should == 'list_batch_subscribe'
     end
   end
+  
+  context '.convert_to_resource_params' do
+    it do
+      instance = CatarseMailchimp::API.convert_to_resource_params(subject, user)
+      instance.should == { EMAIL: user.email, NAME: user.name }
+    end
+  end
 
-  context 'Unsubscribe' do
+  context '.unsubscribe' do
+    subject do
+      user = mock()
+      user.stubs(:email).returns('lorem@lorem.com')
+      user
+    
+      [ user.email ]
+    end    
+    
     it 'when user want to not receive a newsletter, should update on mailchimp list' do
       instance = CatarseMailchimp::API.unsubscribe(subject, 'LISTID')
       instance.should == 'list_batch_unsubscribe'

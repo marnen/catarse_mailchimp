@@ -2,20 +2,27 @@ module CatarseMailchimp
   module ActiveRecord
     # USAGE
     #
-    #   # Simple example
     #   class User < ActiveRecord::Base
-    #     sync_with_mailchimp
+    #     sync_with_mailchimp subscribe_data: { EMAIL: :email, NAME: :name },      
+    #                         list_id: 'listID',
+    #                         subscribe_when: ->(user) { user.newsletter_changed? && user.newsletter },
+    #                         unsubscribe_when: ->(user) { user.newsletter_changed? && !user.newsletter },
+    #                         ubsubscribe_email: ->(user) { user.email }
+    #     
     #   end
-    def sync_with_mailchimp
+    #
+    def sync_with_mailchimp options
       self.class_eval <<-RUBY
         before_save do
-          if newsletter_changed?
-            if newsletter
-              CatarseMailchimp::API.subscribe(self)
-            else
-              CatarseMailchimp::API.unsubscribe(self)
-            end
+                              
+          if options[:subscribe_when].call(self)
+            CatarseMailchimp::API.subscribe(options[:subscribe_data], options[:list_id], self)
           end
+          
+          if options[:unsubscribe_when].call(self)
+            CatarseMailchimp::API.unsubscribe(options[:ubsubscribe_email].call(self), options[:list_id])            
+          end
+          
         end
       RUBY
     end
