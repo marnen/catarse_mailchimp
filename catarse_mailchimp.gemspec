@@ -6,7 +6,7 @@ require "catarse_mailchimp/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "catarse_mailchimp"
+  s.name        = "marnen-catarse_mailchimp"
   s.version     = CatarseMailchimp::VERSION
   s.authors     = ["Antônio Roberto Silva", 'Marnen Laibow-Koser']
   s.email       = ["forevertonny@gmail.com", 'marnen@marnen.org']
