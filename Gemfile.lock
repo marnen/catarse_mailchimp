@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    marnen-catarse_mailchimp (0.0.1.pre.2ed4f3931dfa292e5c1c62619772f04e41c68629)
+    marnen-catarse_mailchimp (0.0.1.pre.2ed4f3931dfa292e5c1c62619772f04e41c68629z)
       mailchimp
       supermodel
 
