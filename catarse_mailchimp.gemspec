@@ -8,9 +8,9 @@ require "catarse_mailchimp/version"
 Gem::Specification.new do |s|
   s.name        = "catarse_mailchimp"
   s.version     = CatarseMailchimp::VERSION
-  s.authors     = ["Antônio Roberto Silva"]
-  s.email       = ["forevertonny@gmail.com"]
-  s.homepage    = "http://github.com/devton/catarse_mailchimp"
+  s.authors     = ["Antônio Roberto Silva", 'Marnen Laibow-Koser']
+  s.email       = ["forevertonny@gmail.com", 'marnen@marnen.org']
+  s.homepage    = "http://github.com/marnen/catarse_mailchimp"
   s.summary     = "MailChimp integration with Catarse"
   s.description = "MailChimp integration with Catarse crowdfunding platform"
 
